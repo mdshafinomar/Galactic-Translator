@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galactic Translator 2050</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d12;
+            color: #d1d5db;
+        }
+        .container {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 1rem;
+        }
+        .translator-card {
+            background-color: #1a1a2e;
+            box-shadow: 0 0 20px rgba(118, 118, 255, 0.4);
+            border: 2px solid rgba(118, 118, 255, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            width: 100%;
+        }
+        .glowing-button {
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 10px rgba(118, 118, 255, 0.6);
+        }
+        .glowing-button:hover {
+            box-shadow: 0 0 20px rgba(118, 118, 255, 0.8), 0 0 30px rgba(118, 118, 255, 0.6);
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #7676ff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Mobile-specific adjustments */
+        @media (max-width: 640px) {
+            .translator-card {
+                padding: 1.5rem;
+            }
+            .mobile-stack {
+                flex-direction: column;
+            }
+            .mobile-stack > * {
+                width: 100%;
+            }
+            .mobile-btn {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+            .mobile-text {
+                font-size: 1rem;
+            }
+            .mobile-select {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+            .mobile-textarea {
+                height: 6rem;
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-950 text-gray-200">
+    <div class="container">
+        <div class="translator-card rounded-xl p-4 md:p-8 w-full max-w-2xl text-center">
+            <h1 class="text-2xl md:text-4xl font-bold mb-4 md:mb-6 text-indigo-400 font-mono">
+                Galactic Translator
+            </h1>
+
+            <div class="space-y-4 md:space-y-6">
+                <div class="relative">
+                    <label for="inputLang" class="block text-left mb-2 text-indigo-300 text-sm md:text-base">Input Language</label>
+                    <select id="inputLang" class="mobile-select w-full p-3 md:p-4 bg-gray-800 border border-gray-700 rounded-lg text-base md:text-lg text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200">
+                        <option value="en">English</option>
+                        <option value="af">Afrikaans</option>
+                        <option value="sq">Albanian</option>
+                        <option value="am">Amharic</option>
+                        <option value="ar">Arabic</option>
+                        <option value="hy">Armenian</option>
+                        <option value="az">Azerbaijani</option>
+                        <option value="eu">Basque</option>
+                        <option value="be">Belarusian</option>
+                        <option value="bn">Bengali</option>
+                        <option value="bs">Bosnian</option>
+                        <option value="bg">Bulgarian</option>
+                        <option value="ca">Catalan</option>
+                        <option value="ceb">Cebuano</option>
+                        <option value="ny">Chichewa</option>
+                        <option value="zh">Chinese (Simplified)</option>
+                        <option value="zh-TW">Chinese (Traditional)</option>
+                        <option value="co">Corsican</option>
+                        <option value="hr">Croatian</option>
+                        <option value="cs">Czech</option>
+                        <option value="da">Danish</option>
+                        <option value="nl">Dutch</option>
+                        <option value="eo">Esperanto</option>
+                        <option value="et">Estonian</option>
+                        <option value="tl">Filipino</option>
+                        <option value="fi">Finnish</option>
+                        <option value="fr">French</option>
+                        <option value="fy">Frisian</option>
+                        <option value="gl">Galician</option>
+                        <option value="ka">Georgian</option>
+                        <option value="de">German</option>
+                        <option value="el">Greek</option>
+                        <option value="gu">Gujarati</option>
+                        <option value="ht">Haitian Creole</option>
+                        <option value="ha">Hausa</option>
+                        <option value="haw">Hawaiian</option>
+                        <option value="iw">Hebrew</option>
+                        <option value="hi">Hindi</option>
+                        <option value="hmn">Hmong</option>
+                        <option value="hu">Hungarian</option>
+                        <option value="is">Icelandic</option>
+                        <option value="ig">Igbo</option>
+                        <option value="id">Indonesian</option>
+                        <option value="ga">Irish</option>
+                        <option value="it">Italian</option>
+                        <option value="ja">Japanese</option>
+                        <option value="jw">Javanese</option>
+                        <option value="kn">Kannada</option>
+                        <option value="kk">Kazakh</option>
+                        <option value="km">Khmer</option>
+                        <option value="rw">Kinyarwanda</option>
+                        <option value="ko">Korean</option>
+                        <option value="ku">Kurdish (Kurmanji)</option>
+                        <option value="ky">Kyrgyz</option>
+                        <option value="lo">Lao</option>
+                        <option value="la">Latin</option>
+                        <option value="lv">Latvian</option>
+                        <option value="lt">Lithuanian</option>
+                        <option value="lb">Luxembourgish</option>
+                        <option value="mk">Macedonian</option>
+                        <option value="mg">Malagasy</option>
+                        <option value="ms">Malay</option>
+                        <option value="ml">Malayalam</option>
+                        <option value="mt">Maltese</option>
+                        <option value="mi">Maori</option>
+                        <option value="mr">Marathi</option>
+                        <option value="mn">Mongolian</option>
+                        <option value="my">Myanmar (Burmese)</option>
+                        <option value="ne">Nepali</option>
+                        <option value="no">Norwegian</option>
+                        <option value="or">Odia (Oriya)</option>
+                        <option value="ps">Pashto</option>
+                        <option value="fa">Persian</option>
+                        <option value="pl">Polish</option>
+                        <option value="pt">Portuguese (Portugal)</option>
+                        <option value="pa">Punjabi (Gurmukhi)</option>
+                        <option value="ro">Romanian</option>
+                        <option value="ru">Russian</option>
+                        <option value="sm">Samoan</option>
+                        <option value="gd">Scots Gaelic</option>
+                        <option value="sr">Serbian</option>
+                        <option value="st">Sesotho</option>
+                        <option value="sn">Shona</option>
+                        <option value="sd">Sindhi</option>
+                        <option value="si">Sinhala</option>
+                        <option value="sk">Slovak</option>
+                        <option value="sl">Slovenian</option>
+                        <option value="so">Somali</option>
+                        <option value="es">Spanish</option>
+                        <option value="su">Sundanese</option>
+                        <option value="sw">Swahili</option>
+                        <option value="sv">Swedish</option>
+                        <option value="tg">Tajik</option>
+                        <option value="ta">Tamil</option>
+                        <option value="te">Telugu</option>
+                        <option value="th">Thai</option>
+                        <option value="tr">Turkish</option>
+                        <option value="uk">Ukrainian</option>
+                        <option value="ur">Urdu</option>
+                        <option value="ug">Uyghur</option>
+                        <option value="uz">Uzbek</option>
+                        <option value="vi">Vietnamese</option>
+                        <option value="cy">Welsh</option>
+                        <option value="xh">Xhosa</option>
+                        <option value="yi">Yiddish</option>
+                        <option value="yo">Yoruba</option>
+                        <option value="zu">Zulu</option>
+                    </select>
+                </div>
+                <div class="relative">
+                    <label for="inputText" class="block text-left mb-2 text-indigo-300 text-sm md:text-base">Text to Translate</label>
+                    <textarea id="inputText" class="mobile-textarea w-full p-3 md:p-4 bg-gray-800 border border-gray-700 rounded-lg text-base md:text-lg text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200 resize-none" placeholder="Enter text..."></textarea>
+                </div>
+                
+                <div class="flex">
+                    <button id="translateBtn" class="glowing-button mobile-btn flex-1 w-full px-4 md:px-6 py-2 md:py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg transition-all duration-300 transform hover:scale-105">
+                        TRANSLATE
+                    </button>
+                </div>
+
+                <div id="status" class="flex items-center justify-center h-10 hidden">
+                    <div class="spinner"></div>
+                    <span class="ml-4 text-purple-400 font-mono text-sm md:text-base">Working...</span>
+                </div>
+
+                <div class="relative">
+                    <label for="outputLang" class="block text-left mb-2 text-indigo-300 text-sm md:text-base">Output Language</label>
+                    <select id="outputLang" class="mobile-select w-full p-3 md:p-4 bg-gray-800 border border-gray-700 rounded-lg text-base md:text-lg text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200">
+                        <option value="en">English</option>
+                        <option value="af">Afrikaans</option>
+                        <option value="sq">Albanian</option>
+                        <option value="am">Amharic</option>
+                        <option value="ar">Arabic</option>
+                        <option value="hy">Armenian</option>
+                        <option value="az">Azerbaijani</option>
+                        <option value="eu">Basque</option>
+                        <option value="be">Belarusian</option>
+                        <option value="bn">Bengali</option>
+                        <option value="bs">Bosnian</option>
+                        <option value="bg">Bulgarian</option>
+                        <option value="ca">Catalan</option>
+                        <option value="ceb">Cebuano</option>
+                        <option value="ny">Chichewa</option>
+                        <option value="zh">Chinese (Simplified)</option>
+                        <option value="zh-TW">Chinese (Traditional)</option>
+                        <option value="co">Corsican</option>
+                        <option value="hr">Croatian</option>
+                        <option value="cs">Czech</option>
+                        <option value="da">Danish</option>
+                        <option value="nl">Dutch</option>
+                        <option value="eo">Esperanto</option>
+                        <option value="et">Estonian</option>
+                        <option value="tl">Filipino</option>
+                        <option value="fi">Finnish</option>
+                        <option value="fr">French</option>
+                        <option value="fy">Frisian</option>
+                        <option value="gl">Galician</option>
+                        <option value="ka">Georgian</option>
+                        <option value="de">German</option>
+                        <option value="el">Greek</option>
+                        <option value="gu">Gujarati</option>
+                        <option value="ht">Haitian Creole</option>
+                        <option value="ha">Hausa</option>
+                        <option value="haw">Hawaiian</option>
+                        <option value="iw">Hebrew</option>
+                        <option value="hi">Hindi</option>
+                        <option value="hmn">Hmong</option>
+                        <option value="hu">Hungarian</option>
+                        <option value="is">Icelandic</option>
+                        <option value="ig">Igbo</option>
+                        <option value="id">Indonesian</option>
+                        <option value="ga">Irish</option>
+                        <option value="it">Italian</option>
+                        <option value="ja">Japanese</option>
+                        <option value="jw">Javanese</option>
+                        <option value="kn">Kannada</option>
+                        <option value="kk">Kazakh</option>
+                        <option value="km">Khmer</option>
+                        <option value="rw">Kinyarwanda</option>
+                        <option value="ko">Korean</option>
+                        <option value="ku">Kurdish (Kurmanji)</option>
+                        <option value="ky">Kyrgyz</option>
+                        <option value="lo">Lao</option>
+                        <option value="la">Latin</option>
+                        <option value="lv">Latvian</option>
+                        <option value="lt">Lithuanian</option>
+                        <option value="lb">Luxembourgish</option>
+                        <option value="mk">Macedonian</option>
+                        <option value="mg">Malagasy</option>
+                        <option value="ms">Malay</option>
+                        <option value="ml">Malayalam</option>
+                        <option value="mt">Maltese</option>
+                        <option value="mi">Maori</option>
+                        <option value="mr">Marathi</option>
+                        <option value="mn">Mongolian</option>
+                        <option value="my">Myanmar (Burmese)</option>
+                        <option value="ne">Nepali</option>
+                        <option value="no">Norwegian</option>
+                        <option value="or">Odia (Oriya)</option>
+                        <option value="ps">Pashto</option>
+                        <option value="fa">Persian</option>
+                        <option value="pl">Polish</option>
+                        <option value="pt">Portuguese (Portugal)</option>
+                        <option value="pa">Punjabi (Gurmukhi)</option>
+                        <option value="ro">Romanian</option>
+                        <option value="ru">Russian</option>
+                        <option value="sm">Samoan</option>
+                        <option value="gd">Scots Gaelic</option>
+                        <option value="sr">Serbian</option>
+                        <option value="st">Sesotho</option>
+                        <option value="sn">Shona</option>
+                        <option value="sd">Sindhi</option>
+                        <option value="si">Sinhala</option>
+                        <option value="sk">Slovak</option>
+                        <option value="sl">Slovenian</option>
+                        <option value="so">Somali</option>
+                        <option value="es">Spanish</option>
+                        <option value="su">Sundanese</option>
+                        <option value="sw">Swahili</option>
+                        <option value="sv">Swedish</option>
+                        <option value="tg">Tajik</option>
+                        <option value="ta">Tamil</option>
+                        <option value="te">Telugu</option>
+                        <option value="th">Thai</option>
+                        <option value="tr">Turkish</option>
+                        <option value="uk">Ukrainian</option>
+                        <option value="ur">Urdu</option>
+                        <option value="ug">Uyghur</option>
+                        <option value="uz">Uzbek</option>
+                        <option value="vi">Vietnamese</option>
+                        <option value="cy">Welsh</option>
+                        <option value="xh">Xhosa</option>
+                        <option value="yi">Yiddish</option>
+                        <option value="yo">Yoruba</option>
+                        <option value="zu">Zulu</option>
+                    </select>
+                </div>
+                <div class="relative">
+                    <label for="outputText" class="block text-left mb-2 text-indigo-300 text-sm md:text-base">Translated Text</label>
+                    <div id="outputText" class="mobile-textarea w-full p-3 md:p-4 bg-gray-800 border border-gray-700 rounded-lg text-base md:text-lg text-gray-200 text-left overflow-y-auto"></div>
+                </div>
+
+                <div class="flex justify-center space-x-2 md:space-x-4 mt-4 md:mt-6">
+                    <button id="copyBtn" class="glowing-button mobile-btn flex-1 px-4 md:px-6 py-2 md:py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-lg transition-all duration-300 transform hover:scale-105">
+                        COPY
+                    </button>
+                </div>
+            </div>
+            
+            <p id="message" class="mt-4 text-sm text-center text-green-400 font-mono hidden"></p>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const inputText = document.getElementById('inputText');
+            const outputText = document.getElementById('outputText');
+            const inputLang = document.getElementById('inputLang');
+            const outputLang = document.getElementById('outputLang');
+            const translateBtn = document.getElementById('translateBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const statusDiv = document.getElementById('status');
+            const messageEl = document.getElementById('message');
+
+            const supportedLanguages = new Set([
+                "en", "af", "sq", "am", "ar", "hy", "az", "eu", "be", "bn", "bs", "bg", "ca", "ceb", "ny", "zh", "zh-TW", "co", "hr", "cs", "da", "nl", "eo", "et", "tl", "fi", "fr", "fy", "gl", "ka", "de", "el", "gu", "ht", "ha", "haw", "iw", "hi", "hmn", "hu", "is", "ig", "id", "ga", "it", "ja", "jw", "kn", "kk", "km", "rw", "ko", "ku", "ky", "lo", "la", "lv", "lt", "lb", "lu", "mk", "mg", "ms", "ml", "mt", "mi", "mr", "mn", "my", "ne", "no", "or", "ps", "fa", "pl", "pt", "pa", "ro", "ru", "sm", "gd", "sr", "st", "sn", "sd", "si", "sk", "sl", "so", "es", "su", "sw", "sv", "tg", "ta", "te", "th", "tr", "uk", "ur", "ug", "uz", "vi", "cy", "xh", "yi", "yo", "zu"
+            ]);
+
+            function showMessage(text, type = 'success') {
+                messageEl.textContent = text;
+                messageEl.className = `mt-4 text-sm text-center font-mono block ${type === 'success' ? 'text-green-400' : 'text-red-400'}`;
+                setTimeout(() => {
+                    messageEl.textContent = '';
+                    messageEl.classList.add('hidden');
+                }, 3000);
+            }
+
+            async function translateText() {
+                const textToTranslate = inputText.value.trim();
+                const fromLang = inputLang.value;
+                const toLang = outputLang.value;
+                
+                if (!textToTranslate) {
+                    showMessage("Please enter some text to translate.", "error");
+                    return;
+                }
+
+                if (!supportedLanguages.has(fromLang)) {
+                    showMessage("Translation from this language is not supported. Please select another language.", "error");
+                    return;
+                }
+
+                if (!supportedLanguages.has(toLang)) {
+                    showMessage("Translation to this language is not supported. Please select another language.", "error");
+                    return;
+                }
+
+                statusDiv.classList.remove('hidden');
+                translateBtn.disabled = true;
+                copyBtn.disabled = true;
+                outputText.textContent = '';
+
+                try {
+                    // The source language is now directly the selected value, since "auto" is removed.
+                    const sourceLang = fromLang;
+                    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=${sourceLang}|${toLang}`;
+                    
+                    const res = await fetch(url);
+                    const data = await res.json();
+
+                    if (data.responseData.translatedText) {
+                        outputText.textContent = data.responseData.translatedText;
+                    } else {
+                        outputText.textContent = "Translation failed. Try again.";
+                    }
+                } catch (err) {
+                    console.error("Error:", err);
+                    outputText.textContent = "Error fetching translation.";
+                }
+
+                statusDiv.classList.add('hidden');
+                translateBtn.disabled = false;
+                copyBtn.disabled = false;
+            }
+
+            function copyText() {
+                const textToCopy = outputText.textContent;
+                if (!textToCopy) {
+                    showMessage("No text to copy.", "error");
+                    return;
+                }
+                
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(textToCopy)
+                        .then(() => showMessage("Text copied to clipboard!"))
+                        .catch(err => {
+                            console.error('Failed to copy: ', err);
+                            fallbackCopyText(textToCopy);
+                        });
+                } else {
+                    fallbackCopyText(textToCopy);
+                }
+            }
+            
+            function fallbackCopyText(text) {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-999999px";
+                textArea.style.top = "-999999px";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    showMessage("Text copied to clipboard!");
+                } catch (err) {
+                    console.error('Fallback copy failed: ', err);
+                    showMessage("Failed to copy text.", "error");
+                }
+                
+                document.body.removeChild(textArea);
+            }
+            
+            translateBtn.addEventListener('click', translateText);
+            copyBtn.addEventListener('click', copyText);
+            
+            inputText.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    translateText();
+                }
+            });
+        };
+    </script>
+</body>
+</html>
